@@ -1,0 +1,45 @@
+from os import listdir
+from os.path import isfile, join
+import os
+import shutil
+
+'''
+The logic behind this code is get all files in the download's folder.
+Then find all the folders and make a list of it.
+Go in the folder and make a list of items in that folder.
+If null, delete folder; if not null, move all items to downloads folder.
+'''
+
+def throwup_all_files_in_folder(mypath):
+    files = os.listdir(mypath)
+    folder_path_list = [] # fill this array with the path of folders
+    print(files)
+
+
+    for file in files:
+        filetype = file.split('_')[-1] # I know that the folders end with _folder, so I'll know for sure if the file is a folder with this check
+        
+        if filetype == 'folder':
+            folder_path = mypath + '/' + file
+            folder_path_list.append(folder_path)
+
+            print(folder_path_list)
+        else:
+            continue
+    
+    for path in folder_path_list:
+        file_names = os.listdir(path)
+        
+        if file_names: 
+            for file in file_names:
+                current_path = path + '/' + file
+                shutil.move(current_path, mypath)
+            
+            os.rmdir(path)
+        else:
+            os.rmdir(path)
+
+
+if __name__ == "__main__":
+    mypath = 'C:/Users/yeahj/Downloads'
+    throwup_all_files_in_folder(mypath)

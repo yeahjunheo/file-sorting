@@ -1,0 +1,50 @@
+#credits to Automation Feed https://betterprogramming.pub/how-i-organise-my-downloads-folder-with-python-6c76358968ea for the tutorial and thought behind this project
+
+from os import listdir
+from os.path import isfile, join
+import os # a python library that allows the script to interact with the operating system
+import shutil # helps in transferring files within directories
+
+'''
+The logic in this code:
+Make an array of all files in the downloads folder.
+Look at the file extension of each file and append it to the array.
+Add filetype and filetype specific path to a dictionary and create a folder if it doesnt exits.
+Then, look through all files and move them to their respective folders.
+'''
+
+def sorting_files_in_folders(mypath): # this operation goes over all files in the downloads folder and creates folders depending on their type
+
+    #looks into all the files in 'mypath' and makes a list of all the names
+    files = [f for f in listdir (mypath) if isfile (join(mypath, f))] # I wonder what the difference would be with using just os.listdir(mypath) here instead of what exists...
+    file_type_variation_list = [] # a list of all different file types found in the directory
+    filetype_folder_dict = {} # a dictionary to hold the file type and its name(key)
+
+    # create new folders to hold the different types of files
+    for file in files:
+        filetype = file.split('.')[-1] # we will get the file type by splitting the name of the file by a '.' and accessing the last element; make sure that the 'show file extensions' is enabled in file explorere, or else this method will be obscolete
+        
+        if filetype not in file_type_variation_list: # for all new file_types, add to the list and create a new folder and add to folder dict
+            file_type_variation_list.append(filetype) # add the filetype in the list of file types
+            new_folder_name = mypath + '/' + filetype + '_folder' # creates a variable to hold the path for the new filetype folder
+            filetype_folder_dict[str(filetype)] = str(new_folder_name) # adds a string key and corresponding file path to the dictionary
+            
+            if os.path.isdir(new_folder_name) == True: # if the file exists in the directory,
+                continue # don't do anything
+            else:
+                os.mkdir(new_folder_name) # make a new directory with the corresponding path in the selected folder
+
+    # move all files in files to their corresponding folders
+    for file in files: #This program doesn't take into account the possibility of duplicate files, which causes an error and stops the program
+        src_path = mypath + '/' + file # file path for selected file
+        filetype = file.split('.')[-1] 
+        
+        if filetype in filetype_folder_dict.keys(): # if the filetype is in the dictionary of filetypes,
+            dest_path = filetype_folder_dict[str(filetype)] # get the corresponding path of the folder
+            shutil.move(src_path, dest_path) # and move the file to the filetype folder
+
+    print(src_path + '>>>' + dest_path)
+
+if __name__ == "__main__": # executes the code by accessing the defined operation to path of the downloads folder
+    mypath = 'C:/Users/yeahj/Downloads'
+    sorting_files_in_folders(mypath)
