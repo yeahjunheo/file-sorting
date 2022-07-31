@@ -7,7 +7,10 @@ import shutil
 The logic behind this code is get all files in the download's folder.
 Then find all the folders and make a list of it.
 Go in the folder and make a list of items in that folder.
-If null, delete folder; if not null, move all items to downloads folder.
+If null, delete folder; if not null, move all items to downloads folder then delete the folder.
+
+Note that this program is an unsorting specifically targetted at unsorting the folders made by the sorting program. 
+Pretty sure there are quicker and shorter programs available, but this code was written holding on the logic of the sorting program.
 '''
 
 def throwup_all_files_in_folder(mypath):
