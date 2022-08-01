@@ -46,5 +46,5 @@ def sorting_files_in_folders(mypath): # this operation goes over all files in th
     print(src_path + '>>>' + dest_path)
 
 if __name__ == "__main__": # executes the code by accessing the defined operation to path of the downloads folder
-    mypath = 'C:/Users/yeahj/Downloads'
+    mypath = 'C:/your/destination/here'
     sorting_files_in_folders(mypath)
