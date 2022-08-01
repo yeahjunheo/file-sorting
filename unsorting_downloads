@@ -44,5 +44,5 @@ def throwup_all_files_in_folder(mypath):
 
 
 if __name__ == "__main__":
-    mypath = 'C:/Users/yeahj/Downloads'
+    mypath = 'C:/your/destination/here'
     throwup_all_files_in_folder(mypath)
